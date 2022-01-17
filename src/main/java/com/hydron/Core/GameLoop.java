@@ -39,13 +39,14 @@ public class GameLoop{
             double deltaTime = (currentTime - lastTime);
             double deltaTimeInSeconds = deltaTime / 1000000000.0d;
             TimeUtils.deltaTime = (float) (deltaTimeInSeconds);
+            TimeUtils.time += deltaTime;
             nextFixedUpdateTime += deltaTimeInSeconds;
-            doWindowEvents();
             while (nextFixedUpdateTime >= updates)
             {
                 renderer.fixedUpdate();
                 nextFixedUpdateTime -= updates;
             }
+            cleanWindow();
             renderer.update();
             if (System.currentTimeMillis() >= time){
                 displayFps = fps;
@@ -56,6 +57,7 @@ public class GameLoop{
                 time += 1000;
             }
             renderer.render();
+            doWindowEvents();
             lastTime = currentTime;
         }
         glfwFreeCallbacks(Window.window);
@@ -66,11 +68,14 @@ public class GameLoop{
 
     }
 
-    public void doWindowEvents(){
+    public void cleanWindow(){
         glfwPollEvents();
         glClearColor( (30f/255f), (30f/255f), (30f/255f), 1.0f);
 
         glClear(GL_COLOR_BUFFER_BIT);
+    }
+
+    public void doWindowEvents(){
 
         glfwSwapBuffers(Window.window);
     }

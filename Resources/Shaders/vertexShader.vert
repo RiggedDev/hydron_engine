@@ -1,10 +1,14 @@
 #version 330 core
 
 layout (location=0) in vec3 position;
-layout (location=1) in vec4 color;
-out vec4 fragment_color;
+layout (location=1) in vec2 textureCoordinates;
+
+out vec2 textureCoords;
+
+uniform mat4 projectionMatrix;
+uniform mat4 viewMatrix;
 
 void main(void){
-    fragment_color = color;
-    gl_Position = vec4(position, 1.0);
+    textureCoords = textureCoordinates;
+    gl_Position = projectionMatrix * viewMatrix * vec4(position, 1.0);
 }

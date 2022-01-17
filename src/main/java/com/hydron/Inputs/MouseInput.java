@@ -28,7 +28,7 @@ public class MouseInput {
             pressedButtons[limitedButton] = true;
         }
         else if(action == GLFW_RELEASE) {
-            pressedButtons[limitedButton] = true;
+            pressedButtons[limitedButton] = false;
             mouseDragging = false;
         }
     }
